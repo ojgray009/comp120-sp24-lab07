@@ -10,6 +10,8 @@ class _Node:
 class LinkedList:
     """
     >>> l = LinkedList()
+    >>> print(l)
+    []
     >>> l.add(5)
     >>> l.add(-8.3)
     >>> print(l)
@@ -32,17 +34,20 @@ class LinkedList:
         self.head = None
 
     def __str__(self) -> str:
-        s = '['
+        if self.is_empty(): # empty list
+            return '[]'
 
         current = self.head
+        s = '['
 
         while current is not None:
-            s += str(current.data)
-            s += ", "
+            s += (str(current.data) + ', ')
             current = current.next
 
+        # strip off the extraneous ', ' at the end
         s = s[:-2] + ']'
         return s
+
 
     def is_empty(self) -> bool:
         return self.head == None
