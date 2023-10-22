@@ -1,6 +1,11 @@
+"""
+Module: linked_list
+
+Implementation of a linked list.
+"""
+
 from typing import Any, Optional
-from random import randrange, shuffle
-import random
+from random import randrange, shuffle, seed
 
 class Node:
     """ Class representing a single entry in a linked list.
@@ -125,7 +130,7 @@ def create_random_linked_list(size: int, seed_val: int = 42) -> LinkedList:
         (LinkedList): The linked list with random numbers
     """
 
-    random.seed(seed_val)
+    seed(seed_val)
 
     # create list of nodes with random vals
     nodes = [Node(randrange(-100000, 100001), None) for _ in range(size)]
