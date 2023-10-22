@@ -2,13 +2,31 @@ from typing import Any, Optional
 from random import randrange, shuffle
 import random
 
-class _Node:
-    def __init__(self, data: Any, next: Optional['_Node']) -> None:
+class Node:
+    """ Class representing a single entry in a linked list.
+
+    >>> n = Node(7, None)
+    >>> n.data
+    7
+    >>> n.next
+    None
+    >>> m = Node(13, n)
+    >>> m.data
+    13
+    >>> m.next.data
+    7
+    """
+    data: Any
+    next: Optional['Node']
+
+    def __init__(self, data: Any, next: Optional['Node']) -> None:
         self.data = data
         self.next = next
 
 class LinkedList:
     """
+    Class representing a linked list, which implements the UnorderedList ADT.
+
     >>> l = LinkedList()
     >>> print(l)
     []
@@ -16,11 +34,11 @@ class LinkedList:
     >>> l.add(-8.3)
     >>> print(l)
     [-8.3, 5]
-    >>> len(l)
+    >>> l.size()
     2
-    >>> -8.3 in l
+    >>> l.search(-8.3)
     True
-    >>> 7 in l
+    >>> l.search(7)
     False
     >>> l2 = LinkedList()
     >>> l2.add(5)
@@ -28,7 +46,7 @@ class LinkedList:
     False
     """
 
-    head: Optional[_Node]
+    head: Optional[Node]
 
     def __init__(self) -> None:
         self.head = None
@@ -54,10 +72,10 @@ class LinkedList:
 
     def add(self, data: Any) -> None:
         """ Adds new node containing data to front of list. """
-        new_node = _Node(data, self.head)
+        new_node = Node(data, self.head)
         self.head = new_node
 
-    def __len__(self) -> int:
+    def size(self) -> int:
         """ Returns length of list. """
         current = self.head
         count = 0
@@ -68,8 +86,8 @@ class LinkedList:
 
         return count
 
-    def __contains__(self, value: Any) -> bool:
-        """ Returns True if <value> is stored as data in this list. """
+    def search(self, value: Any) -> bool:
+        """ Returns True if <value> is located anywhere in this list. """
         current = self.head
 
         while current is not None:
@@ -110,7 +128,7 @@ def create_random_linked_list(size: int, seed_val: int = 42) -> LinkedList:
     random.seed(seed_val)
 
     # create list of nodes with random vals
-    nodes = [_Node(randrange(-100000, 100001), None) for _ in range(size)]
+    nodes = [Node(randrange(-100000, 100001), None) for _ in range(size)]
 
     # shuffle them up so they aren't in memory order
     shuffle(nodes)
